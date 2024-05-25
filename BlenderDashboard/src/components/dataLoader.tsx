@@ -1,8 +1,30 @@
 import blenderData from './blenderData';
+import styled from 'styled-components';
+import Bar from './bar.tsx'
+
+const TableSt = styled.table`
+    width:100dvw;
+    background-color: #001719;
+
+    & tr{
+        height: 2.5rem;
+        padding:1rem;
+    }
+
+    & td{
+        text-align: end;
+    }
+
+    & label{
+        padding:1rem;
+        color:#fff;
+        font-family: sans-serif;
+    }
+`;
 
 const BlenderDataLoader = ()=>{
     return(
-      <table>
+      <TableSt>
         <thead>
             <tr>
                 <th>Name</th>
@@ -16,12 +38,12 @@ const BlenderDataLoader = ()=>{
                     <label>{item.name}</label>
                 </td>
                 <td>
-                    <div>{item.score}</div>
+                    <Bar score={item.score} />
                 </td>
             </tr>
             )
         })}
-      </table>
+      </TableSt>
     )
 }
 
