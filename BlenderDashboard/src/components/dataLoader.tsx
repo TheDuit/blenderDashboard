@@ -1,34 +1,21 @@
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import Bar from "./bar";
+import { ResponsiveBullet } from '@nivo/bullet';
 
-const TableSt = styled.table`
-  width: -webkit-fill-available;
-  background-color: #001719;
-  margin: auto;
-  color: #fff;
-  font-family: sans-serif;
-  position: relative;
-  left:0;
-
-  & tr {
-    height: 2.5rem;
-    padding: 1rem;
-    vertical-align: middle;
-  }
-
-  & td {
-    width: fit-content;
-    text-align: center;
-  }
-
-  & label {
-    padding: 1rem;
-  }
-`;
+const theme = {
+  axis: {
+    textColor: '#eee',
+    fontSize: '14px',
+    tickColor: '#eee',
+  },
+  grid: {
+    stroke: '#888',
+    strokeWidth: 1
+  },
+};
 
 const BlenderDataLoader = () => {
-  const [blenderData, setBlenderData] = useState(null);
+  const [blenderData, setBlenderData] = useState([]);
 
   useEffect(() => {
     fetch('https://blenderopendatacaller.onrender.com/api/blenderData')
@@ -39,36 +26,37 @@ const BlenderDataLoader = () => {
         return response.json();
       })
       .then(data => {
-        setBlenderData(data)
+        const interData = data.rows.slice(0,10).map(item => ({
+          id: item[0],
+          ranges: [12000],
+          measures: [item[2]],
+          markers: [item[2]],
+        }));
+        console.log(interData);  // Verificação dos dados no console
+        setBlenderData(interData);
       })
       .catch(error => {
-        console.error('Erro:', error)
-      })
+        console.error('Erro:', error);
+      });
   }, []);
 
+  if (blenderData.length === 0) {
+    return <div>Loading...</div>;  // Exibir um estado de carregamento enquanto os dados estão sendo carregados
+  }
+
   return (
-    <div>
-    <TableSt>
-      <thead>
-        <tr>
-          {blenderData && blenderData.columns.map((column, index) => (
-            <td key={index}>{column.display_name}</td>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-      {blenderData && blenderData.rows.map((column, index) => (
-            index <=50 &&
-            <tr>
-              <td>{column[0]}</td>
-              <td>{column[1]}</td>
-              <Bar score={column[2]}/>
-              <td>{column[3]}</td>
-            </tr>
-          ))}
-      </tbody>
-    </TableSt>
-  </div>
+      <ResponsiveBullet
+        data={blenderData}
+        margin={{ top: 50, right: 90, bottom: 50, left: 90 }}
+        spacing={46}
+        rangeColors="#00000030"
+        measureBorderColor="#E37200"
+        markerColors="#ff5500"
+        titleAlign="start"
+        titleOffsetX={-70}
+        measureSize={0.2}
+        theme={theme}
+      />
   );
 };
 
