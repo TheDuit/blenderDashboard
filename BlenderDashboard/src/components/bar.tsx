@@ -1,38 +1,48 @@
 import styled from "styled-components";
+import { ResponsiveBullet } from '@nivo/bullet';
 
-const Barst = styled.div`
-    display: flex;
-    height: 2rem;
-    border-radius: .5rem;
-    width: ${(props)=> props.scoreWidth /10 + 'px'};
-    background:#E37200;
-    position: relative;
-    align-items: center;
-    justify-content: flex-start;
-    
-    &:hover{
-        background:#cd5200;
-        transition: ease-in-out 200ms;
-    }
-
-    & label{
-        position: absolute;
-        font-weight: bolder;
-        transition: ease-in-out 200ms;
-        color: #ffffff;
-    }
-
-    &:hover label{
-        transition: ease-in-out 200ms;
-        color: #fff;
-    }
+const BarWrapper = styled.div`
 
 
-`;
+  & div{
+    width:-webkit-fill-available !important;
+    height: 70px !important;
+  }
+`
 
-const Bar = ({score}:any)=>{
+const theme = {
+    axis: {
+      textColor: '#eee',
+      fontSize: '14px',
+      tickColor: '#eee',
+    },
+    grid: {
+      stroke: '#888',
+      strokeWidth: 1
+    },
+  };
+
+const Bar = ({data}:any)=>{
     return(
-        <Barst scoreWidth={score}><label>{score} Points </label></Barst>
+      <BarWrapper>
+        <ResponsiveBullet
+        data={data}
+        margin={{ top: 10, right: 10, bottom: 10, left: 10 }}
+        spacing={70}
+        rangeColors="#4a6468"
+        measureColors={"#f77c00"}
+        measureBorderColor="#E37200"
+        markerColors="#ff5500"
+        markerSize={0}
+        titleAlign="start"
+        titleOffsetX={20}
+        titleOffsetY={100}
+
+
+
+        measureSize={1}
+      />
+      </BarWrapper>
     );
 }
 
