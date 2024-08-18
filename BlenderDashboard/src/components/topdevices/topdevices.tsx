@@ -34,6 +34,7 @@ const TopDevices = ()=>{
                 <DevicesGeneralContainer>
                 {blenderData.devices.map((device, index)=>(
                         <DevicesContainer>
+                            <td key={index}>{`${index + 1}º`}</td>
                             <td key={index}>{device.name}</td>
                             <td key={index}>{device.type}</td>
                             <td key={index}>{device.score}</td>
