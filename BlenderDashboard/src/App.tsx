@@ -1,14 +1,11 @@
 import { useState } from 'react'
 import './App.css'
-import MainWrapper from './components/mainWrapper'
-import DataLoader from './components/dataLoader'
-import BlenderDataLoader from './components/dataLoader'
-
+import TopDevices from './components/topdevices/topdevices'
 
 function App() {
 
   return (
-      <BlenderDataLoader/>
+      <TopDevices/>
   )
 }
 
